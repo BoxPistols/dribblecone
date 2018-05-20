@@ -22,6 +22,20 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'listen', '>= 3.0.5', '< 3.2'
+gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+gem 'devise', '~> 4.4', '>= 4.4.1'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
+gem 'impressionist', '~> 1.6'
+gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
+gem 'gravatar_image_tag', '~> 1.2'
+gem 'acts_as_votable', '~> 0.11.1'
+gem 'binding_of_caller', '~> 0.7.3'
+gem 'better_errors', '~> 2.4'
+gem 'simple_form', '~> 4.0'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.3'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -44,7 +58,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
