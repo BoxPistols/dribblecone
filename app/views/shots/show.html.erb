@@ -1,19 +1,4 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @shot.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @shot.description %>
-</p>
-
-
-
-<%= link_to 'Edit', edit_shot_path(@shot) %> |
-<%= link_to 'Back', shots_path %>
 
 
 <div class="section">
@@ -60,6 +45,19 @@
        <section class="comments">
         <h2 class="subtitle is-5"><%= pluralize(@shot.comments.count, 'Comment') %></h2>
 
+        <%= render @shot.comments %>
+         <hr />
+        <% if user_signed_in? %>
+        <div class="comment-form">
+        <h3 class="subtitle is-3">Leave a reply</h3>
+         <%= render 'comments/form' %>
+         </div>
+
+        <% else %>
+
+        <div class="content"><%= link_to 'Sign in', new_user_session_path %></div>
+        <% end %>
+
        </section>
       </div>
 
@@ -68,18 +66,54 @@
             <div class="panel-block views data">
 
                 <span class="icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
-                0 Views
+                <%= pluralize(@shot.impressionist_count, 'View') %>
             </div>
 
             <div class="panel-block comments data">
-                <span class="icon"><i class="fa fa-comment" ariaphidden="true"></i></span>0
+                <span class="icon"><i class="fa fa-comment" ariaphidden="true"></i></span>
 
-                <%#= pluralize(@shot.comments.count, 'Comment') %>
+                <%= pluralize(@shot.comments.count, 'Comment') %>
             </div>
             <div class="panel-block likes data">
-            <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
-                0
+              <% if user_signed_in? %>
+              <% if current_user.liked? @shot %>
+              <%= link_to unlike_shot_path(@shot), method: :put, class: "unlike_shot" do %>
+              <span class="icon"><i class="fa fa-heart has-text-primary" aria-hidde="true"></i></span>
+
+              <span class="vote_count">
+                
+                <%= pluralize(@shot.get_likes.size, 'Like') %></span>
+
+              <% end %>
+
+              <% else %>
+
+              <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
+
+              <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+
+              <span class="vote_count"><%= pluralize(@shot.get_likes.size, 'Like') %></span>
+
+              <% end %>
+
+              <% end %>
+
+              <% else %>
+
+              <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
+
+              <span class="icon"><i class="fa fa-heart" aria-hidden="true"</span></i></span>
+
+              <span class="vote_count"><%= @shot.get_likes.size %></span>
+
+              <% end %>
+              <% end %>
+
+              
             </div>
+
+
+
         </div>
 
       </div>
