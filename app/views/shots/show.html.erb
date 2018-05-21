@@ -1,123 +1,143 @@
 
+<div class="container">
 
+<hr class="featurette-divider">
 
-<div class="section">
-    <div class="container">
-        <h1 class="title is-3"><%= @shot.title %></h1>
-        <div class="columns">
-            <div class="columns is-8">
-                <span class="by has-text-grey-light">by </span>
-                <div class="user-thumb">
-                    <%= gravatar_image_tag(@shot.user.email.gsub('spam', 'mdeering'), alt: @shot.user.name, gravatar: { size: 20 }); %>
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <br>
+            <br>
+            <br>
 
-                </div>
-                <div class="user-name has-text-weight-bold"><%= @shot.user.name %> </div>
+  <!-- STRIPED TABLE -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td><div class="column is-3 is-offset-1">
+        <div class="nav panel show-shot-analytics">
+         <div class="panel-block views data">
+             
+             <span class="icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
+             <%= pluralize(@shot.impressionist_count, 'View') %>
+             
+         </div>
+         <div class="panel-block comments data">
+            <span class="icon"><i class="fa fa-comment" aria-hidden="true"></i></span>
 
-                <div class="shot-time"><span class="has-text-grey-light">poted</span><span class="has-text-weight-semibold">
-                    <%= verbose_date(@shot.created_at) %>
-               </span></div>
+          <%= pluralize(@shot.comments.count, 'Comment') %>
+         </div>
+         <div class="panel-block likes data">
+            <% if user_signed_in? %> 
+        <% if  current_user.liked? @shot %>
+        <%= link_to unlike_shot_path(@shot), method: :put, class: "unlike_shot" do %>
+          <span class="icon"><i class="fa fa-heart has-text-primary" aria-hidden="true"></i></span>
+          <span class="vote_count"><%= pluralize(@shot.get_likes.size, 'Like') %></span>
+         <% end %>
+      <% else %>
+     
+      <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
+          <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+           <span class="vote_count"><%= pluralize(@shot.get_likes.size, 'Like') %></span>
 
-           </div>
-           </div>
+         <% end %>
 
-           <div class="columns"></div>
-           <div class="column is-8">
-            <div class="shot-container">
-                <div class="shot-ful">
-                    <%= image_tag@shot.user_shot_url, size: "200x200" unless @shot.user.blank? %>
-                </div>
+      <% end %>
 
-            <% if user_signed_in? && (current_user.id == @shot.user_id) %>
+      <% else %>
 
-            <div class="buttond has-addons">
-                <%= link_to 'Edit', edit_shot_path(@shot), class: "button" %>
+      <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
+          <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+          <span class="vote_count"><%= @shot.get_likes.size %></span>
+         <% end %>
+        <% end %>
+         </div>
+        </div>
 
-            <%= link_to 'Delete', shot_path, class: "button", method: :delete, data: { confirm: 'Are u=you sure you want to delete this shot?'} %>
+ </div></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                
+            </tbody>
+        </table>
+          </div>
+          <div class="col-md-5 order-md-1">
 
-           </div>
+            <h1 class="title is-3"><%= @shot.title %></h1>
+   <div class="columns">
+     <div class="column is-8">
+       <span class="by has-text-grey-light">by</span>
+         <div class="user-thumb">
+          <%= gravatar_image_tag(@shot.user.email.gsub('spam', 'mdeering'), alt: @shot.user.name, gravatar: { size: 20 }); %>
 
-           <% end %>
+         </div>
+         <div class="user-name has-text-weight-bold"><%= @shot.user.name %></div>
 
-           <%= @shot.description %>
+         <div class="shot-time"><span class="has-text-grey-light">posted</span><span class="has-text-weight-semibold">
+        <%= verbose_date(@shot.created_at) %>
 
-       </div>
+         </span></div>
+     </div>
+
+   </div>
+        
+        <div class="shot-container">
+           <div class="shot-full">
+            <%= image_tag @shot.user_shot_url, class: 'featurette-image img-fluid mx-auto' unless @shot.user.blank? %>
+
+          </div>
+
+           <% if user_signed_in? && (current_user.id == @shot.user_id) %>
+          <div class="buttons has-addons">
+            <%= link_to 'Edit', edit_shot_path(@shot), class: "button" %>
+            <%= link_to 'Delete', shot_path, class: "button", method: :delete, data: { confirm: 'Are you sure you want to delete this shot?'} %>
+          </div>
+       <% end %>
+       <%= @shot.description %>
+       </div> 
 
        <section class="comments">
         <h2 class="subtitle is-5"><%= pluralize(@shot.comments.count, 'Comment') %></h2>
 
-        <%= render @shot.comments %>
-         <hr />
-        <% if user_signed_in? %>
-        <div class="comment-form">
+
+         <%= render @shot.comments %>
+      <hr />
+      <% if user_signed_in? %>
+       <div class="comment-form">
         <h3 class="subtitle is-3">Leave a reply</h3>
          <%= render 'comments/form' %>
-         </div>
+       </div>
 
-        <% else %>
 
-        <div class="content"><%= link_to 'Sign in', new_user_session_path %></div>
-        <% end %>
+      <% else %>
 
-       </section>
-      </div>
-
-      <div clas="column is-3 is-offset-1">
-         <div class="nav panel show-shot-analytics">
-            <div class="panel-block views data">
-
-                <span class="icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
-                <%= pluralize(@shot.impressionist_count, 'View') %>
-            </div>
-
-            <div class="panel-block comments data">
-                <span class="icon"><i class="fa fa-comment" ariaphidden="true"></i></span>
-
-                <%= pluralize(@shot.comments.count, 'Comment') %>
-            </div>
-            <div class="panel-block likes data">
-              <% if user_signed_in? %>
-              <% if current_user.liked? @shot %>
-              <%= link_to unlike_shot_path(@shot), method: :put, class: "unlike_shot" do %>
-              <span class="icon"><i class="fa fa-heart has-text-primary" aria-hidde="true"></i></span>
-
-              <span class="vote_count">
-                
-                <%= pluralize(@shot.get_likes.size, 'Like') %></span>
-
-              <% end %>
-
-              <% else %>
-
-              <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
-
-              <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
-
-              <span class="vote_count"><%= pluralize(@shot.get_likes.size, 'Like') %></span>
-
-              <% end %>
-
-              <% end %>
-
-              <% else %>
-
-              <%= link_to like_shot_path(@shot), method: :put, class: "like_shot" do %>
-
-              <span class="icon"><i class="fa fa-heart" aria-hidden="true"</span></i></span>
-
-              <span class="vote_count"><%= @shot.get_likes.size %></span>
-
-              <% end %>
-              <% end %>
-
-              
-            </div>
-
+      <div class="content"><%= link_to 'Sign in', new_user_session_path %></div>
+      <% end %>
 
 
         </div>
 
-      </div>
-  </div>
-</div>
 
 
+
+
+
+
+
+
+
+          </div>
+
+
+        </div>
+
+        </div>

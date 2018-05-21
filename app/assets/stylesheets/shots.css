@@ -153,3 +153,28 @@
 .hidden {
      visibility: hidden;
 }
+
+
+
+/*.fa-heart {
+
+
+
+a {
+    color: #ff0089 !important;
+   
+}
+
+}*/
+
+/*.icon .fa-heart:hover {
+    color: #ff0089;
+}*/
+
+/*.icon .fa-heart:focus {
+    color: #ff0089;
+}*/
+
+.icon .fa-heart {
+    color: #ff0089 !important;
+}

@@ -1,16 +1,12 @@
 
+
+
+
 <main role="main">
 
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Album example</h1>
-          <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
-          <p>
-            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-          </p>
-        </div>
-      </section>
+     
+
+
 
       <div class="album py-5 bg-light">
         <div class="container">
@@ -19,75 +15,91 @@
             <% @shots.each do |shot| %>
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-
-                <%= link_to shot, class: "shot" do %>
-                <%= image_tag(shot.user_shot_url, class: "card-img-top") %>
-                <% end %>
                 
+               <%= link_to shot, class:"shot" do %>
+
+                <%= image_tag(shot.user_shot_url, class: "card-img-top") %>
+               
+
+               <% end %>
                 <div class="card-body">
                   <p class="card-text"><%= shot.title %></p>
                   <p class="card-text"><%= truncate(shot.description, length: 60)  %></p>
                   <p class="card-text"><%= time_ago_in_words(shot.created_at) %></p>
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <%= link_to 'Destroy', shot, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-secondary' %>
-                    </div>
+                   
+
+                   <div class="level-item views">
                     <%= link_to shot do %>
-                     <span class="icon data"><i class="fa fa-eye"></i></span>
-                     <%= shot.impressionist_count %>
-                    <% end %>
-
-                    <%= link_to shot do %>
-                      <span class="icon data"><i class="fa fa-comment"></i></span>
-                     <%= shot.comments.count %>
-                    
-                    <% end %>
-
-                    </div>
-                    
-                    <div class="level-item likes">
-        
-                    <% if user_signed_in? %> 
-                    <% if  current_user.liked? shot %>
-                    <%= link_to unlike_shot_path(shot), method: :put, class: "unlike_shot" do %>
-                    <span class="icon"><i class="fa fa-heart has-text-primary" aria-hidden="true"></i></span>
-                    <span class="vote_count"><%= shot.get_likes.size %></span>
-                    <% end %>
-                   <% else %>
-     
-                   <%= link_to like_shot_path(shot), method: :put, class: "like_shot" do %>
-                   <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
-                   <span class="vote_count"><%= shot.get_likes.size %></span>
-
-                   <% end %>
-
-                   <% end %>
-
-                   <% else %>
-
-                <%= link_to like_shot_path(shot), method: :put, class: "like_shot" do %>
-                 <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
-                  <span class="vote_count"><%= shot.get_likes.size %></span>
-                  <% end %>
+                  <span class="icon data"><i class="fa fa-eye"></i></span>
+                  <%= shot.impressionist_count %>
                 <% end %>
-      
-
-                </div>
-
-                </div>
-
-                <div class="user-data">
-                 <div class="user-thumb">
-                  <%= gravatar_image_tag(shot.user.email.gsub('spam', 'mdeering'), alt: shot.user.name, gravatar: { size: 20 }) %>
-                </div>
-                 <div class="user-name"><%= shot.user.name %></div>
-                 </div>
-
-                 </div>
-           
-                </div>
-                 <% end %>
-               </div>
               </div>
 
+                <div class="level-item comments data">
+
+                <%= link_to shot do %>
+                  <span class="icon data"><i class="fa fa-comment"></i></span>
+                  <%= shot.comments.count %>
+                <% end %>
+
+              </div>
+
+
+                <div class="level-item likes">
+        
+        <% if user_signed_in? %> 
+        <% if  current_user.liked? shot %>
+        <%= link_to unlike_shot_path(shot), method: :put, class: "unlike_shot" do %>
+          <span class="icon"><i class="fa fa-heart has-text-primary" aria-hidden="true"></i></span>
+          <span class="vote_count"><%= shot.get_likes.size %></span>
+         <% end %>
+      <% else %>
+     
+      <%= link_to like_shot_path(shot), method: :put, class: "like_shot" do %>
+          <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+          <span class="vote_count"><%= shot.get_likes.size %></span>
+
+         <% end %>
+
+      <% end %>
+
+      <% else %>
+
+      <%= link_to like_shot_path(shot), method: :put, class: "like_shot" do %>
+          <span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span>
+          <span class="vote_count"><%= shot.get_likes.size %></span>
+         <% end %>
+        <% end %>
+      
+
+      </div>
+
+
+                  <td></td
+
+                </div>
+              </div>
+            </div>
+
+        <div class="user-data">
+          <div class="user-thumb">
+            <%= gravatar_image_tag(shot.user.email.gsub('spam', 'mdeering'), alt: shot.user.name, gravatar: { size: 20 }) %>
+          </div>
+           <div class="user-name"><%= shot.user.name %></div>
+        </div>
+        </div>
+        </div>
+            <% end %>
+            
+
+            
+          
+        
+      </div>
+      </div>
+       </div>
     </main>
+
+
+
